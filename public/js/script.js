@@ -1,9 +1,5 @@
-// Form lưu tên
 document.getElementById('nameForm').addEventListener('submit', async function (e) {
-    // Ngăn hành vi mặc định của form (ngăn tải lại trang)
     e.preventDefault();
-
-    // Lấy giá trị nhập từ trường input có id là 'name'
     const name = document.getElementById('name').value;
 
     // Gửi yêu cầu POST đến server tại route '/submit' với dữ liệu JSON
@@ -14,17 +10,13 @@ document.getElementById('nameForm').addEventListener('submit', async function (e
         },
         body: JSON.stringify({ name: name }),  // Chuyển đổi đối tượng { name: name } thành chuỗi JSON
     });
-
-    // Chờ phản hồi từ server và chuyển đổi phản hồi từ JSON thành đối tượng JavaScript
     const data = await response.json();
 
     // Hiển thị thông điệp trả về từ server trong phần tử có id là 'nameResponse'
     document.getElementById('nameResponse').textContent = `${data.message}. Danh sách tên: ${data.names.join(', ')}`;
 });
 
-// Form tính BMI
 document.getElementById('bmiForm').addEventListener('submit', async function (e) {
-    // Ngăn hành vi mặc định của form (ngăn tải lại trang)
     e.preventDefault();
 
     // Lấy giá trị chiều cao, cân nặng nhập từ form
@@ -39,8 +31,6 @@ document.getElementById('bmiForm').addEventListener('submit', async function (e)
         },
         body: JSON.stringify({ height, weight }),  // Chuyển đổi đối tượng thành chuỗi JSON
     });
-
-    // Chờ phản hồi từ server và chuyển đổi phản hồi từ JSON thành đối tượng JavaScript
     const data = await response.json();
 
     // Hiển thị thông điệp trả về từ server trong phần tử có id là 'bmiResult'
