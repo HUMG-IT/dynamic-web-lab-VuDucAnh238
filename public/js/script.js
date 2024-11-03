@@ -1,38 +1,28 @@
 document.getElementById('nameForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const name = document.getElementById('name').value;
-
-    // Gửi yêu cầu POST đến server tại route '/submit' với dữ liệu JSON
-    const response = await fetch('/api/v1/submit', {
-        method: 'POST',  // Sử dụng phương thức POST để gửi dữ liệu
+    const response = await fetch('/submit', {
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json',  // Định nghĩa kiểu nội dung gửi là JSON
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: name }),  // Chuyển đổi đối tượng { name: name } thành chuỗi JSON
+        body: JSON.stringify({ name: name }),
     });
     const data = await response.json();
-
-    // Hiển thị thông điệp trả về từ server trong phần tử có id là 'nameResponse'
-    document.getElementById('nameResponse').textContent = `${data.message}. Danh sách tên: ${data.names.join(', ')}`;
+    document.getElementById('nameResponse').textContent = `${data.message}. Danh sách tên: ${data.name.join(', ')}`;
 });
 
 document.getElementById('bmiForm').addEventListener('submit', async function (e) {
     e.preventDefault();
-
-    // Lấy giá trị chiều cao, cân nặng nhập từ form
-    const height = parseFloat(document.getElementById('height').value);
-    const weight = parseFloat(document.getElementById('weight').value);
-
-    // Gửi yêu cầu POST đến server tại route '/bmi' với dữ liệu JSON
-    const response = await fetch('/api/v1/bmi', {
-        method: 'POST',  // Sử dụng phương thức POST để gửi dữ liệu
+    const height = document.getElementById('height').value;
+    const weight = document.getElmentalById('weight').value;
+    const response = await fetch('/api/v1/bmi',{
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json',  // Định nghĩa kiểu nội dung gửi là JSON
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ height, weight }),  // Chuyển đổi đối tượng thành chuỗi JSON
+        body: JSON.stringify({height:height, weight:weight}),
     });
     const data = await response.json();
-
-    // Hiển thị thông điệp trả về từ server trong phần tử có id là 'bmiResult'
-    document.getElementById('bmiResult').textContent = `BMI của bạn là: ${data.bmi}, Phân loại: ${data.classification}`;
+    document.getElementById('bmiResult').textContent = `BMI của bạn là: ${data.bmi}, Phân loại: ${data.classfication}`;
 });
