@@ -1,16 +1,19 @@
-// Import các hàm calculateBMI và classifyBMI từ bmi.js
-const { calculateBMI, classifyBMI } = require('../models/bmi');
+const { calculateBMI, classifyBMI } = require("../models/bmi");
 
-// Hàm getBMI xử lý yêu cầu từ client
-const getBMI = (req, res) => {
-    const weight = req.body.weight;
-    const height = req.body.height;
-    const bmi = calculateBMI(weight, height);
-    const classification = classifyBMI(bmi);
-// Trả về JSON chứa bmi và classification
-    res.json({ bmi, classification });
+exports.getBMI = (req, res) => {
+  const { weight, height } = req.body;
+
+  if (!weight || !height) {
+    return res
+      .status(400)
+      .json({ error: "Vui lòng cung cấp đầy đủ cân nặng và chiều cao." });
+  }
+
+  const bmi = calculateBMI(weight, height);
+  const classification = classifyBMI(bmi);
+
+  res.json({
+    bmi,
+    classification,
+  });
 };
-// Xuất hàm getBMI
-module.exports = { getBMI };
-
-// Lưu ý: Tham khảo mã trong tệp nameController.js
